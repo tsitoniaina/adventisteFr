@@ -5,7 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function MemoiresAdmin() {
   const [memoires, setMemoires] = useState([]);
-
+  const apiBaseUrl = process.env.REACT_APP_API_BASE;;
   useEffect(() => {
     api
       .get("/admin/memoires")
@@ -52,7 +52,7 @@ export default function MemoiresAdmin() {
                     <strong>📄 Statut :</strong> {getStatusBadge(m.is_validated)}
                   </p>
                   <a
-                    href={`http://localhost:3001/uploads/${m.file_path}`}
+                    href={`${apiBaseUrl}/uploads/${m.file_path}`}
                     target="_blank"
                     rel="noreferrer"
                     className="btn btn-outline-primary w-100"

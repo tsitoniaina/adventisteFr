@@ -21,7 +21,7 @@ import AdminMemoires from "./pages/AdminMemoires";
 import DashboardLayout from "./pages/Dashboard"; // Ce composant inclut le <Outlet />
 import LandingFepetra from "./pages";
 import RegisterPage from "./pages/RegisterPage";
-
+import MemoireViewer from "./pages/MemoireViewer";
 function App() {
   return (
     <Router>
@@ -36,7 +36,7 @@ function App() {
         <Route path="/admin/requirements" element={<AdminRequirements />} />
         <Route path="/admin/proofs" element={<AdminProofs />} />
         <Route path="/admin/memoires" element={<AdminMemoires />} />
-
+        <Route path="/memoire/:id" element={<MemoireViewer />} />
         {/* Coordinateur District */}
         <Route path="/dashboard-district" element={<ProtectedRoute><DashboardDistrict /></ProtectedRoute>} />
         <Route path="/aspirants-district" element={<ProtectedRoute><AspirantsByDistrict /></ProtectedRoute>} />

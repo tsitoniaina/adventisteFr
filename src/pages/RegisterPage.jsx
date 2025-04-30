@@ -119,31 +119,10 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
             >
-              <option value="aspirant">Aspirant</option>
               <option value="coordinateur_district">Coordinateur District</option>
               <option value="coordinateur_region">Coordinateur Région</option>
-              <option value="admin">Admin</option>
             </select>
           </div>
-
-          {/* <div className="mb-3">
-            <label className="form-label">Région</label>
-            <select
-              className="form-select"
-              name="region_id"
-              value="{formData.region_id}"
-              onChange={handleChange}
-              required
-            >
-              <option value="test">-- Sélectionnez une région --</option>
-              {regions.map((region) => (
-                <option key={region.id} value={region.id}>
-                  {region.name}
-                  test
-                </option>
-              ))}
-            </select>
-          </div> */}
 
           <button type="submit" className="btn btn-primary w-100">
             <i className="bi bi-person-plus me-2"></i>S’inscrire

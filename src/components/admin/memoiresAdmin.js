@@ -53,8 +53,9 @@ export default function MemoiresAdmin() {
                   </p>
                   <a
                     href={`${apiBaseUrl}/uploads/${m.file_path}`}
-                    target="_blank"
-                    rel="noreferrer"
+                    // target="_blank"
+                    // rel="noreferrer"
+                    download
                     className="btn btn-outline-primary w-100"
                   >
                     <i className="bi bi-box-arrow-down me-2"></i>Télécharger le mémoire

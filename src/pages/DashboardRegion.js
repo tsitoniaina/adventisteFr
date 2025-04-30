@@ -15,6 +15,9 @@ export default function DashboardRegion() {
   const [memoires, setMemoires] = useState([]);
   const [showCard, setShowCard] = useState(false);
   const [districts, setDistricts] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [eglises, setEglises] = useState([]);
+  
 
   const toggleCard = () => setShowCard(!showCard);
 
@@ -41,6 +44,17 @@ export default function DashboardRegion() {
     }
   };
 
+  const handleDistrictClick = async (district) => {
+    setSelectedDistrict(district);
+    try {
+      const res = await api.get(`/locations/eglises/by-district/${district.id}`);
+      setEglises(res.data);
+    } catch (err) {
+      console.error("Erreur chargement églises :", err);
+      setEglises([]);
+    }
+  };
+  
   const handleLogout = () => {
     removeToken();
     navigate("/");
@@ -118,21 +132,47 @@ export default function DashboardRegion() {
           </div>
         </div>
         <div className="card shadow-sm mb-4">
-  <div className="card-header bg-primary text-white">
-    <i className="bi bi-map me-2"></i>Districts de votre région
-  </div>
-  <ul className="list-group list-group-flush">
-    {districts.length === 0 ? (
-      <li className="list-group-item text-muted">Aucun district trouvé.</li>
-    ) : (
-      districts.map((d) => (
-        <li key={d.id} className="list-group-item">
-          <i className="bi bi-geo-alt text-info me-2"></i>{d.name}
-        </li>
-      ))
-    )}
-  </ul>
-</div>
+          <div className="card-header bg-primary text-white">
+            <i className="bi bi-map me-2"></i>Districts de votre région
+          </div>
+          <ul className="list-group list-group-flush">
+            {districts.length === 0 ? (
+              <li className="list-group-item text-muted">Aucun district trouvé.</li>
+            ) : (
+              districts.map((d) => (
+                <li
+                  key={d.id}
+                  className="list-group-item d-flex justify-content-between align-items-center"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDistrictClick(d)}
+                >
+                  <span>
+                    <i className="bi bi-geo-alt text-info me-2"></i>{d.name}
+                  </span>
+                  <i className="bi bi-eye text-primary"></i>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+        {selectedDistrict && (
+        <div className="card shadow-sm mb-4">
+          <div className="card-header bg-info text-white">
+            <i className="bi bi-building me-2"></i>Églises du district : {selectedDistrict.name}
+          </div>
+          <ul className="list-group list-group-flush">
+            {eglises.length === 0 ? (
+              <li className="list-group-item text-muted">Aucune église trouvée.</li>
+            ) : (
+              eglises.map((e) => (
+                <li key={e.id} className="list-group-item">
+                  <i className="bi bi-house-door me-2 text-success"></i>{e.name}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      )}
 
       </div>
     </div>

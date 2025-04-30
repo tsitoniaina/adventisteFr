@@ -117,6 +117,23 @@ const handleSubmit = async (e) => {
             </select>
           </div>
 
+          {(formData.role === "coordinateur_region") && (
+            <div className="mb-3">
+                <label>Région</label>
+                <select
+                name="region_id"
+                className="form-select"
+                value={formData.region_id}
+                onChange={handleChange}
+                required={formData.role === "coordinateur_district"}
+                >
+                <option value="">-- Sélectionner une région --</option>
+                {regions.map((r) => (
+                    <option key={r.id} value={r.id}>{r.name}</option>
+                ))}
+                </select>
+            </div>
+            )}
           {/* ✅ Champs dynamiques si coordinateur_district */}
           {formData.role === "coordinateur_district" && (
             <>

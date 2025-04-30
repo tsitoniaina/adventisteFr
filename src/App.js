@@ -20,6 +20,7 @@ import AdminProofs from "./pages/AdminProofs";
 import AdminMemoires from "./pages/AdminMemoires";
 import DashboardLayout from "./pages/Dashboard"; // Ce composant inclut le <Outlet />
 import LandingFepetra from "./pages";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingFepetra />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
         {/* Admin */}
         <Route path="/admin" element={<DashboardAdmin />} />

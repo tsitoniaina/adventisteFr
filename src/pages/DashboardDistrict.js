@@ -14,6 +14,8 @@ const DashboardRegion=()=> {
   const [aspirants, setAspirants] = useState([]);
   const [memoires, setMemoires] = useState([]);
   const [showCard, setShowCard] = useState(false);
+  const [eglises, setEglises] = useState([]);
+
 
   const toggleCard = () => {
     setShowCard(!showCard);
@@ -26,8 +28,24 @@ const DashboardRegion=()=> {
     api.get("/region/memoires/en_attente")
       .then((res) => setMemoires(res.data))
       .catch((err) => console.error("Erreur chargement memoires:", err));
+
+      api.get("/auth/me/district")
+      .then((res) => {
+        const districtId = res.data.district_id;
+        console.log("🆔 district_id utilisateur connecté :", districtId);
+  
+        return api.get(`/locations/eglises/by-district/${districtId}`);
+      })
+      .then((res) => {
+        console.log("✅ Églises récupérées :", res.data);
+        setEglises(res.data);
+      })
+      .catch((err) => {
+        console.error("Erreur chargement églises ou district :", err);
+      });
   }, []);
 
+  console.log("",eglises);
   return (
     <div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
       <SidebarDistric />
@@ -74,9 +92,6 @@ const DashboardRegion=()=> {
             </div>
       </header>
         <div className="container-fluid">
-
-          
-          
           <div className="row g-6 mb-6">
             <div className="col-md-6">
               <InvestituresDistric/>
@@ -87,6 +102,23 @@ const DashboardRegion=()=> {
               <ValidationProofDistric/>
             </div>
           </div>
+          <div className="card shadow-sm mt-4">
+            <div className="card-header bg-primary text-white">
+              <i className="bi bi-house-door me-2"></i>Églises de votre district
+            </div>
+            <ul className="list-group list-group-flush">
+              {eglises.length === 0 ? (
+                <li className="list-group-item text-muted">Aucune église trouvée.</li>
+              ) : (
+                eglises.map((e) => (
+                  <li key={e.id} className="list-group-item">
+                    <i className="bi bi-building text-success me-2"></i>{e.name}
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+
         </div>
       </main>
     </div>
